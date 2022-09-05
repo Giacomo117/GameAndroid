@@ -22,7 +22,7 @@ import GameObject.Spell;
  * Questo Game controlla tutti gli oggetti nel gioco ed è responsabile degli aggiornamenti dei dati e delle immagini nello schermo
  * */
 
-
+//commento prova
 class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private final GameLoop gameLoop;
