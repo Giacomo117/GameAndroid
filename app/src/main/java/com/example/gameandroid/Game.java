@@ -161,14 +161,14 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
             enemyList.add(new Enemy(getContext(),player));
         }
 
-        while(numberOfSpellToCast > 0){
-            spellList.add(new Spell(getContext(), player));
-            numberOfSpellToCast--;
-        }
-
         //aggiorno lo stato di ogni nemico
         for (Enemy enemy : enemyList){
             enemy.update();
+        }
+
+        while(numberOfSpellToCast > 0){
+            spellList.add(new Spell(getContext(), player));
+            numberOfSpellToCast--;
         }
 
         //aggiorno lo stato di ogni spell g

@@ -34,6 +34,17 @@ public class Player extends Circle{
         velocityY= joystick.getActuatorY()*MAX_SPEED;
         positionX+=velocityX;
         positionY+=velocityY;
+
+
+        //aggiorno la direzione
+        if (velocityX != 0 || velocityY != 0) {
+
+            double distance = Utils.getDistanceBetweenPoints(0, 0, velocityX, velocityY);
+            directionX = velocityX/distance;
+            directionY = velocityY/distance;
+        }
+
+
     }
 
     public void setPosition(double positionX, double positionY) {

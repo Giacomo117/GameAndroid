@@ -5,8 +5,8 @@ import android.graphics.Canvas;
 //questa classe è la classe madre di nemici, player, ecc, e ha dentro tutte le cose in comune
 
 public abstract class GameObject {
-   public double positionX;
-    public double positionY;
+   public double positionX=0;
+    public double positionY=0;
     public double velocityX=0;
     public double velocityY=0;
     public double directionX=1;
