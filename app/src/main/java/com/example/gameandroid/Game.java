@@ -34,6 +34,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private List<Spell> spellList= new ArrayList<Spell>();
     private int joystickPointerId=0;
     private  int numberOfSpellToCast=0;
+    private GameOver gameOver;
 
 
     public Game(Context context) {
@@ -45,6 +46,10 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         gameLoop=new GameLoop(this,surfaceHolder); //creo un loop del gioco sul surfaceHolder che ho creato
 
+        //inizializzo il game Panels
+
+
+        gameOver=new GameOver(getContext());
         //inizializzo il joystick
         joystick=new Joystick(275,750,70,40);
 
@@ -129,6 +134,11 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         for (Spell spell : spellList){
             spell.draw(canvas);
         }
+        
+        //scrivere GAME OVER quando il gioco finisce
+        if(player.getHealthPoints() <= 0){
+            gameOver.draw(canvas);
+        }
 
     }
 
@@ -151,6 +161,11 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
+
+        if (player.getHealthPoints() <=0){
+            return;
+        }
+
         joystick.update(); // joystick
         player.update(); // per aggiornare il personaggio
 
@@ -184,6 +199,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
             if(Circle.isColliding(enemy,player)){
                 //Elimino il nemico se ha colliso col player
                 iteratorEnemy.remove();
+                //abbasso la vita del player
+                player.setHealthPoints((int) (player.getHealthPoints() - 1));
                 continue;
             }
             Iterator<Spell> iteratorSpell = spellList.iterator();
