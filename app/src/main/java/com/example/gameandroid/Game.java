@@ -1,8 +1,11 @@
 package com.example.gameandroid;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -25,7 +28,7 @@ import GameObject.Spell;
 //commento prova
 class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
-    private final GameLoop gameLoop;
+    private GameLoop gameLoop;
     private final Context context;
     private final Joystick joystick;
 
@@ -35,7 +38,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private int joystickPointerId=0;
     private  int numberOfSpellToCast=0;
     private GameOver gameOver;
-
+    private GameDisplay gameDisplay;
 
     public Game(Context context) {
         super(context);
@@ -56,16 +59,20 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         //inizializzo il player
         player=new Player(getContext(),joystick, 2*500,500,30);
 
+
+        //centro il player in mezzo
+        DisplayMetrics displayMetrics= new DisplayMetrics(); //metodo per ottenere le dimensioni dello schermo
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        gameDisplay= new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
+
+
+
         setFocusable(true); //sarebbe per permettere di dare il focus ad un componente, non so se serve, (forse si)
 
 
 
     }
 
-    @Override
-    public void surfaceCreated( SurfaceHolder surfaceHolder) {
-        gameLoop.startLoop();
-    }
 
     //per gestire i vari tocchi touchsullo schermo
     @Override
@@ -110,13 +117,23 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+    public void surfaceCreated( SurfaceHolder holder) {
 
+      //preso da internet per risolvere un bug di crash applicazione dopo aver messo in pausa il gioco su dispositivi con android 9+
+        if (gameLoop.getState().equals(Thread.State.TERMINATED)){
+           gameLoop=new GameLoop(this,holder);
+             }
+        gameLoop.startLoop();
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+        Log.d("Game.java","surfaceChanged()");
     }
 
     @Override
     public void surfaceDestroyed( SurfaceHolder surfaceHolder) {
-
+        Log.d("Game.java","surfaceDestroyed()");
     }
 
     @Override
@@ -125,14 +142,15 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         drawUpdatePerSec(canvas);
         drawFramePerSec(canvas);
         joystick.draw(canvas);
-        player.draw(canvas); //per disegnare il player
+        
+        player.draw(canvas,gameDisplay); //per disegnare il player
 
         for(Enemy enemy : enemyList){
-            enemy.draw(canvas);
+            enemy.draw(canvas,gameDisplay);
         }
 
         for (Spell spell : spellList){
-            spell.draw(canvas);
+            spell.draw(canvas,gameDisplay);
         }
         
         //scrivere GAME OVER quando il gioco finisce
@@ -215,5 +233,10 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
             }
 
         }
+        gameDisplay.update();
+    }
+
+    public void pause() {
+        gameLoop.stopLoop();
     }
 }

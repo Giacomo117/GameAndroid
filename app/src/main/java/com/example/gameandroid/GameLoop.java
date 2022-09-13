@@ -27,6 +27,8 @@ public class GameLoop extends Thread {
 
     public void startLoop() {
         isRunning=true;
+
+        //con start faccio partire run
         start();
     }
 
@@ -99,6 +101,17 @@ public class GameLoop extends Thread {
                 frameCount=0;
                 startTime=System.currentTimeMillis(); //riazzero il tempo di partenza
             }
+        }
+    }
+
+    public void stopLoop() {
+        isRunning=false;
+        //devo utilizzare il metodo join per fare in modo che vengano aspettati i return fino
+        // ad onPause prima di reinvocare il comando draw che porterebbe ad un errore
+        try{
+            join();
+        } catch (InterruptedException e){
+            e.printStackTrace();
         }
     }
 }

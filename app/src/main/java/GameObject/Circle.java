@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.example.gameandroid.GameDisplay;
+
 public abstract class Circle extends GameObject {
     private double radius;
     private Paint paint;
@@ -32,7 +34,11 @@ public abstract class Circle extends GameObject {
         return radius;
     }
 
-    public void draw(Canvas canvas) {
-        canvas.drawCircle((float)positionX,(float)positionY,(float)radius,paint); //HO DECISO CHE IL PLAYER E' UNA PALLINA VIOLA
+    public void draw(Canvas canvas, GameDisplay gameDisplay) {
+        canvas.drawCircle(
+                (float)gameDisplay.gameToDisplayCoordinatesX(positionX),
+                (float)gameDisplay.gameToDisplayCoordinatesY(positionY),
+                (float)radius,
+                paint); //HO DECISO CHE IL PLAYER E' UNA PALLINA VIOLA
     }
 }

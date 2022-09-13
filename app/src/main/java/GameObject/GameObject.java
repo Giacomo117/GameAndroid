@@ -2,6 +2,8 @@ package GameObject;
 
 import android.graphics.Canvas;
 
+import com.example.gameandroid.GameDisplay;
+
 //questa classe è la classe madre di nemici, player, ecc, e ha dentro tutte le cose in comune
 
 public abstract class GameObject {
@@ -25,14 +27,14 @@ public abstract class GameObject {
         );
     }
 
-    public abstract void draw(Canvas canvas);   // draw e update sono diversi e quindi sono astratti, perchè ogni classe specifica li implementerà
+    public abstract void draw(Canvas canvas, GameDisplay gameDisplay);   // draw e update sono diversi e quindi sono astratti, perchè ogni classe specifica li implementerà
     public abstract void update();
 
-    protected double getPositionX(){
+    public double getPositionX(){
         return positionX;
     }
 
-    protected double getPositionY(){
+    public double getPositionY(){
         return positionY;
     }
 
