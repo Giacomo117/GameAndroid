@@ -70,7 +70,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
 
         setFocusable(true); //sarebbe per permettere di dare il focus ad un componente, non so se serve, (forse si)
-
+//daje
 
 
     }
