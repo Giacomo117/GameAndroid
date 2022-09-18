@@ -20,12 +20,13 @@ import GameObject.Circle;
 import GameObject.Enemy;
 import GameObject.Player;
 import GameObject.Spell;
+import Graphics.SpriteSheet;
 
 /**
  * Questo Game controlla tutti gli oggetti nel gioco ed è responsabile degli aggiornamenti dei dati e delle immagini nello schermo
  * */
 
-//commento prova
+//commento
 class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private GameLoop gameLoop;
@@ -57,7 +58,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         joystick=new Joystick(275,750,70,40);
 
         //inizializzo il player
-        player=new Player(getContext(),joystick, 2*500,500,30);
+        SpriteSheet spriteSheet = new SpriteSheet(context);
+        player=new Player(getContext(),joystick, 2*500,500,32, spriteSheet.getPlayerSprite());
 
 
         //centro il player in mezzo
