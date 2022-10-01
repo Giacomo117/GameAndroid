@@ -21,6 +21,7 @@ import GameObject.Enemy;
 import GameObject.Player;
 import GameObject.Spell;
 import Graphics.SpriteSheet;
+import Graphics.Animator;
 
 /**
  * Questo Game controlla tutti gli oggetti nel gioco ed è responsabile degli aggiornamenti dei dati e delle immagini nello schermo
@@ -59,7 +60,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         //inizializzo il player
         SpriteSheet spriteSheet = new SpriteSheet(context);
-        player=new Player(getContext(),joystick, 2*500,500,32, spriteSheet.getPlayerSprite());
+        Animator animator = new Animator(spriteSheet.getPlayerSpriteArray());
+        player=new Player(getContext(),joystick, 2*500,500,32, animator);
 
 
         //centro il player in mezzo

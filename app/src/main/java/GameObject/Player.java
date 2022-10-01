@@ -11,6 +11,7 @@ import com.example.gameandroid.GameLoop;
 import com.example.gameandroid.Joystick;
 import com.example.gameandroid.R;
 
+import Graphics.Animator;
 import Graphics.Sprite;
 
 
@@ -26,18 +27,19 @@ public class Player extends Circle{
     public static final double MAX_SPEED= SPEED_PIXEL_PER_SEC / GameLoop.MAX_UPS;
     private HealthBar healthBar;
     private int healthPoints;
-    private Sprite sprite;
+    private Animator animator;
+    private PlayerState playerState;
 
 
     //COSTRUTTORE
-    public Player(Context context,Joystick joystick, double positionX, double positionY, double radius, Sprite sprite){
+    public Player(Context context, Joystick joystick, double positionX, double positionY, double radius, Animator animator){
         super(context, ContextCompat.getColor(context, R.color.purple_200), positionX, positionY,radius); //in questo modo recuperiamo i dati del costruttore in GameObject
         this.joystick= joystick;
         this.healthBar= new HealthBar(context, this);
         this.healthPoints=MAX_HEALTH_POINTS;
-        this.sprite=sprite;
+        this.animator=animator;
+        this.playerState = new PlayerState(this);
     }
-
 
 
     public void update() {
@@ -55,7 +57,7 @@ public class Player extends Circle{
             directionY = velocityY/distance;
         }
 
-
+        playerState.update();
     }
 
     public void setPosition(double positionX, double positionY) {
@@ -65,12 +67,9 @@ public class Player extends Circle{
 
 
     public void draw(Canvas canvas, GameDisplay gameDisplay){
-
+        animator.draw(canvas, gameDisplay, this);
         //super.draw(canvas,gameDisplay); //NON VA BENE perchè noi vogliamo utilizzare un immagine e non CircleDraw
-        sprite.draw(canvas,
-                (int)gameDisplay.gameToDisplayCoordinatesX(getPositionX()) -  sprite.getWidth()/2, // essendo l'immagine 64x64, bastava fare - 32
-                (int)gameDisplay.gameToDisplayCoordinatesY(getPositionY()) - sprite.getHeight()/2
-                    );
+
 
         healthBar.draw(canvas,gameDisplay);
 
@@ -84,6 +83,10 @@ public class Player extends Circle{
         if(healthPoints >=0){
             this.healthPoints=healthPoints;
         }
+    }
+
+    public PlayerState getPlayerState(){
+        return playerState;
     }
 }
 
