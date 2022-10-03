@@ -22,6 +22,7 @@ import GameObject.Player;
 import GameObject.Spell;
 import Graphics.SpriteSheet;
 import Graphics.Animator;
+import Map.Tilemap;
 
 /**
  * Questo Game controlla tutti gli oggetti nel gioco ed è responsabile degli aggiornamenti dei dati e delle immagini nello schermo
@@ -30,6 +31,7 @@ import Graphics.Animator;
 //commento
 class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
+    private final Tilemap tilemap;
     private GameLoop gameLoop;
     private final Context context;
     private final Joystick joystick;
@@ -69,7 +71,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         gameDisplay= new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
 
-
+        //inizializzo la mappa
+        tilemap = new Tilemap(spriteSheet);
 
         setFocusable(true); //sarebbe per permettere di dare il focus ad un componente, non so se serve, (forse si)
 //daje
@@ -143,6 +146,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        tilemap.draw(canvas, gameDisplay);
         drawUpdatePerSec(canvas);
         drawFramePerSec(canvas);
         joystick.draw(canvas);
