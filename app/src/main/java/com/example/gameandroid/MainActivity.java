@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         //setContentView(R.layout.main);
 
         //questo serve per poter mettere in pausa il gioco (utilizzando poi game.pause())
-        //se non va bene questo modo per il menù, basta semplicemente togliere tutte le cose di weakactivity, cancellare check and run e mettere solo inizializzazione di game con setContentView
+        //se non va bene questo modo per il menù, basta semplicemente togliere tutte le cose di
+        //weakactivity, cancellare check and run e mettere solo inizializzazione di game con setContentView
         weakActivity = new WeakReference<>(MainActivity.this);
 
         checkAndRunState(State);
