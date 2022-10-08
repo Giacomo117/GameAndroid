@@ -11,13 +11,22 @@ public class SpriteSheet {
 
     private static final int SPRITE_WIDTH_PIXELS = 64;
     private static final int SPRITE_HEIGHT_PIXELS = 64;
+    private final Bitmap bitmapMappa;
+    private final Bitmap bitmapGoblin;
+    private final Bitmap bitmapIceMonster;
+    private final Bitmap bitmapDevil;
+    private final Bitmap bitmapSnake;
     private Bitmap bitmap; //un modo per far capire al computer come comprendere una mappa
 
     public SpriteSheet(Context context) {
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inScaled= false;
         bitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.sprite_sheetprova,bitmapOptions); //modo per importare una foto dentro al gioco
-
+        bitmapMappa = BitmapFactory.decodeResource(context.getResources(), R.drawable.spritesheet2,bitmapOptions);
+        bitmapGoblin = BitmapFactory.decodeResource(context.getResources(), R.drawable.goblin,bitmapOptions);
+        bitmapIceMonster = BitmapFactory.decodeResource(context.getResources(), R.drawable.ice_rock_monster,bitmapOptions);
+        bitmapDevil = BitmapFactory.decodeResource(context.getResources(), R.drawable.devil,bitmapOptions);
+        bitmapSnake = BitmapFactory.decodeResource(context.getResources(), R.drawable.snake,bitmapOptions);
     }
     public Sprite[] getPlayerSpriteArray(){
         //return new Sprite(this, new Rect(0,0,64,64)); questa funzione ritorna la Sprite ( immagine )

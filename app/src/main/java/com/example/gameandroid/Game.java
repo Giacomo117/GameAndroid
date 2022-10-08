@@ -43,6 +43,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private  int numberOfSpellToCast=0;
     private GameOver gameOver;
     private GameDisplay gameDisplay;
+    private MainActivity.STATE State;
 
     public Game(Context context) {
         super(context);
@@ -86,6 +87,10 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         switch(event.getActionMasked()){
             case MotionEvent.ACTION_DOWN:
+                if(player.getHealthPoints() <= 0){
+                    State = MainActivity.STATE.MENU;
+                    MainActivity.getInstanceActivity().checkAndRunState(State);
+                }
             case MotionEvent.ACTION_POINTER_DOWN:
 
                 if (joystick.getIsPressed()){
