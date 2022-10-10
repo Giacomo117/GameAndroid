@@ -1,11 +1,15 @@
 package GameObject;
 
 import android.content.Context;
+import android.graphics.Canvas;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.gameandroid.GameDisplay;
 import com.example.gameandroid.GameLoop;
 import com.example.gameandroid.R;
+
+import Graphics.Animator;
 
 public class Enemy extends Circle{
 
@@ -18,14 +22,16 @@ public class Enemy extends Circle{
 
 
     private final Player player;
+    private Animator animator;
 
-    public Enemy(Context context, Player player, double positionX, double positionY, double radius) {
+    public Enemy(Context context, Player player, double positionX, double positionY, double radius, Animator animator) {
         super(context, ContextCompat.getColor(context, R.color.magenta), positionX, positionY,radius);
+        this.animator = animator;
         this.player=player;
     }
 
-        //questo costruttore serve per far spawnare i nemici, e per farli spawnare random posX,posY devono essere scelti a caso
-    public Enemy(Context context, Player player) {
+    //questo costruttore serve per far spawnare i nemici, e per farli spawnare random posX,posY devono essere scelti a caso
+    public Enemy(Context context, Player player, Animator animator) {
         super(context,
               ContextCompat.getColor(context, R.color.magenta),
               Math.random()*1000, //positionX,
@@ -33,6 +39,7 @@ public class Enemy extends Circle{
               30//radius
         );
         this.player=player;
+        this.animator = animator;
     }
 
     public static boolean readyToSpawn() {
@@ -74,6 +81,12 @@ public class Enemy extends Circle{
 
         positionX += velocityX;
         positionY += velocityY;
+
+    }
+
+    public void draw(Canvas canvas, GameDisplay gameDisplay){
+        animator.drawEnemy(canvas, gameDisplay, this);
+        //super.draw(canvas,gameDisplay); //NON VA BENE perchè noi vogliamo utilizzare un immagine e non CircleDraw
 
     }
 }
