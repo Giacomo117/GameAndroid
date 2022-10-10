@@ -204,7 +204,9 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         //creo un nemico se è tempo di crearlo
         if (Enemy.readyToSpawn()){
-            enemyList.add(new Enemy(getContext(),player));
+            SpriteSheet spriteSheet = new SpriteSheet(context);
+            Animator animatorEnemy = new Animator(spriteSheet.getEnemySpriteArray());
+            enemyList.add(new Enemy(getContext(),player, animatorEnemy));
         }
 
         //aggiorno lo stato di ogni nemico
