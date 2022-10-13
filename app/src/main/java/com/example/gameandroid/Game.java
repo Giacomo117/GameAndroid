@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.icu.text.CaseMap;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import androidx.core.content.ContextCompat;
 
@@ -30,6 +32,7 @@ import Map.Tilemap;
 
 //commento
 class Game extends SurfaceView implements SurfaceHolder.Callback {
+    public static boolean gameFinished=false;
     private final Player player;
     private final Tilemap tilemap;
     private GameLoop gameLoop;
@@ -43,7 +46,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private  int numberOfSpellToCast=0;
     private GameOver gameOver;
     private GameDisplay gameDisplay;
-    private MainActivity.STATE State;
+    private TitleScreen.STATE State;
+
 
     public Game(Context context) {
         super(context);
@@ -80,7 +84,9 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
 
     }
-
+    public static boolean getGameFinished(){
+        return gameFinished;
+    }
 
     //per gestire i vari tocchi touchsullo schermo
     @Override
@@ -88,8 +94,10 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         switch(event.getActionMasked()){
             case MotionEvent.ACTION_DOWN:
                 if(player.getHealthPoints() <= 0){
-                    State = MainActivity.STATE.MENU;
-                    MainActivity.getInstanceActivity().checkAndRunState(State);
+                    State = TitleScreen.STATE.MENU;
+                    TitleScreen.getInstanceActivity().checkAndRunState(State);
+                    gameFinished=true;
+
                 }
             case MotionEvent.ACTION_POINTER_DOWN:
 
@@ -131,10 +139,10 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated( SurfaceHolder holder) {
 
-      //preso da internet per risolvere un bug di crash applicazione dopo aver messo in pausa il gioco su dispositivi con android 9+
+        //preso da internet per risolvere un bug di crash applicazione dopo aver messo in pausa il gioco su dispositivi con android 9+
         if (gameLoop.getState().equals(Thread.State.TERMINATED)){
-           gameLoop=new GameLoop(this,holder);
-             }
+            gameLoop=new GameLoop(this,holder);
+        }
         gameLoop.startLoop();
     }
 
@@ -155,7 +163,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         drawUpdatePerSec(canvas);
         drawFramePerSec(canvas);
         joystick.draw(canvas);
-        
+
         player.draw(canvas,gameDisplay); //per disegnare il player
 
         for(Enemy enemy : enemyList){
@@ -165,7 +173,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         for (Spell spell : spellList){
             spell.draw(canvas,gameDisplay);
         }
-        
+
         //scrivere GAME OVER quando il gioco finisce
         if(player.getHealthPoints() <= 0){
             gameOver.draw(canvas);
