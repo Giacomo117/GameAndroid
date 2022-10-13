@@ -9,8 +9,8 @@ import com.example.gameandroid.R;
 
 public class SpriteSheet {
 
-    private static final int SPRITE_WIDTH_PIXELS = 64;
-    private static final int SPRITE_HEIGHT_PIXELS = 64;
+    private static final int SPRITE_WIDTH_PIXELS = 128;
+    private static final int SPRITE_HEIGHT_PIXELS = 128;
     private final Bitmap bitmapMappa;
     private Bitmap bitmap; //un modo per far capire al computer come comprendere una mappa
 
@@ -18,7 +18,7 @@ public class SpriteSheet {
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inScaled= false;
         bitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.sprite_sheetprova,bitmapOptions); //modo per importare una foto dentro al gioco
-        bitmapMappa = BitmapFactory.decodeResource(context.getResources(), R.drawable.spritesheet_completo,bitmapOptions);
+        bitmapMappa = BitmapFactory.decodeResource(context.getResources(), R.drawable.spritesheet_completo128x128,bitmapOptions);
     }
 
 
@@ -74,5 +74,36 @@ public class SpriteSheet {
 
     public Sprite getTreeSprite() {
         return getSpriteByIndex(0,1);
+    }
+
+    public Sprite getHorizontalFenceSprite() {
+        return getSpriteByIndex(2,1);
+    }
+
+    public Sprite getVerticalFenceSprite() {
+        return getSpriteByIndex(3,0);
+    }
+
+    public Sprite getFenceSprite(String position){
+        switch(position){
+            case "top":
+                return getSpriteByIndex(2, 1);
+            case "bottom":
+                return getSpriteByIndex(4, 1);
+            case "left":
+                return getSpriteByIndex(3, 0);
+            case "right":
+                return getSpriteByIndex(3, 2);
+            case "top_left":
+                return getSpriteByIndex(2, 0);
+            case "top_right":
+                return getSpriteByIndex(2, 2);
+            case "bottom_left":
+                return getSpriteByIndex(4, 0);
+            case "bottom_right":
+                return getSpriteByIndex(4, 2);
+            default:
+                return null;
+        }
     }
 }

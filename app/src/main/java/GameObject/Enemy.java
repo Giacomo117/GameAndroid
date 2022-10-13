@@ -36,7 +36,7 @@ public class Enemy extends Circle{
               ContextCompat.getColor(context, R.color.magenta),
               Math.random()*1000, //positionX,
                 Math.random()*1000, //positionY,
-              30//radius
+              60//radius
         );
         this.player=player;
         this.animator = animator;
