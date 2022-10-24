@@ -24,7 +24,10 @@ public class Player extends Circle{
     private double radius;
     private Paint paint;
     public static final double SPEED_PIXEL_PER_SEC = 900.0 ;
-    public static final double MAX_SPEED= SPEED_PIXEL_PER_SEC / GameLoop.MAX_UPS;
+    public static double MAX_SPEED= SPEED_PIXEL_PER_SEC / GameLoop.MAX_UPS;
+    public static int FAR_BORDER = 128 * 60;
+    public static int NEAR_BORDER = 128 * 8;
+    public static int EXCESS_PIXELS = 64;
     private HealthBar healthBar;
     private int healthPoints;
     private Animator animator;
@@ -41,13 +44,25 @@ public class Player extends Circle{
         this.playerState = new PlayerState(this);
     }
 
-
+//path finding *
     public void update() {
         velocityX = joystick.getActuatorX()*MAX_SPEED;
         velocityY= joystick.getActuatorY()*MAX_SPEED;
         positionX+=velocityX;
         positionY+=velocityY;
 
+        if(positionX > (FAR_BORDER - EXCESS_PIXELS)){
+            positionX = (FAR_BORDER - EXCESS_PIXELS);
+        }
+        if(positionX < (NEAR_BORDER + EXCESS_PIXELS)){
+            positionX = NEAR_BORDER + EXCESS_PIXELS;
+        }
+        if(positionY > (FAR_BORDER - EXCESS_PIXELS)){
+            positionY = (FAR_BORDER - EXCESS_PIXELS);
+        }
+        if(positionY < (NEAR_BORDER + EXCESS_PIXELS)){
+            positionY = NEAR_BORDER + EXCESS_PIXELS;
+        }
 
         //aggiorno la direzione
         if (velocityX != 0 || velocityY != 0) {

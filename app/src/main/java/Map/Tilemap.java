@@ -5,6 +5,7 @@ import static Map.MapLayout.NUMBER_OF_ROW_TILES;
 import static Map.MapLayout.TILE_HEIGHT_PIXELS;
 import static Map.MapLayout.TILE_WIDTH_PIXELS;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -20,8 +21,8 @@ public class Tilemap {
     private Tile[][] tilemap;
     private Bitmap mapBitmap;
 
-    public Tilemap(SpriteSheet spriteSheet){
-        mapLayout = new MapLayout();
+    public Tilemap(Context context, SpriteSheet spriteSheet){
+        mapLayout = new MapLayout(context);
         this.spriteSheet = spriteSheet;
         initializeTilemap();
     }
@@ -53,6 +54,8 @@ public class Tilemap {
                 tilemap[iRow][iCol].draw(mapCanvas);
             }
         }
+
+        System.out.println();
     }
 
     private Rect getRectByIndex(int idxRow, int idxCol) {

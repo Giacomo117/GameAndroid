@@ -13,7 +13,6 @@ import java.lang.ref.WeakReference;
 public class TitleScreen extends AppCompatActivity {
 
     private Game game;
-    private static View view;
     public static WeakReference<TitleScreen> weakActivity;
 
 
@@ -21,6 +20,7 @@ public class TitleScreen extends AppCompatActivity {
         MENU,
         GAME
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +56,6 @@ public class TitleScreen extends AppCompatActivity {
     public void gameOnScreen(View view ){
             game=new Game(this);
             setContentView(game);
-
     }
 
 
@@ -64,17 +63,6 @@ public class TitleScreen extends AppCompatActivity {
     public static TitleScreen getInstanceActivity(){
         return weakActivity.get();
     }
-
-    public void gameOnScreen2(boolean b){
-        // game=new Game(this);
-        //while (Game.getGameFinished() == false){
-
-        setContentView(view);
-        // }
-        //setContentView(view);
-
-    }
-
 
     @Override
     protected void onStart() {

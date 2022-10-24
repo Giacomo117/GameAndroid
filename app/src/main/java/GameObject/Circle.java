@@ -30,7 +30,7 @@ public abstract class Circle extends GameObject {
         }
     }
 
-    private double getRadius() {
+    public double getRadius() {
         return radius;
     }
 

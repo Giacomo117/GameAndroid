@@ -12,12 +12,10 @@ public class SpriteSheet {
     private static final int SPRITE_WIDTH_PIXELS = 128;
     private static final int SPRITE_HEIGHT_PIXELS = 128;
     private final Bitmap bitmapMappa;
-    private Bitmap bitmap; //un modo per far capire al computer come comprendere una mappa
 
     public SpriteSheet(Context context) {
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inScaled= false;
-        bitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.sprite_sheetprova,bitmapOptions); //modo per importare una foto dentro al gioco
         bitmapMappa = BitmapFactory.decodeResource(context.getResources(), R.drawable.spritesheet_completo128x128,bitmapOptions);
     }
 
@@ -38,10 +36,44 @@ public class SpriteSheet {
 
     public Sprite[] getEnemySpriteArray(){
         Sprite[] spriteArray = new Sprite[4];
-        spriteArray[0] = getSpriteByIndex(10, 31);
-        spriteArray[1] = getSpriteByIndex(10, 32);
-        spriteArray[2] = getSpriteByIndex(10, 33);
-        spriteArray[3] = getSpriteByIndex(10, 34);
+        spriteArray[0] = getSpriteByIndex(10, 27);
+        spriteArray[1] = getSpriteByIndex(10, 28);
+        spriteArray[2] = getSpriteByIndex(10, 29);
+        spriteArray[3] = getSpriteByIndex(10, 30);
+        return spriteArray;
+    }
+
+    public Sprite[] getNormalHouseSpriteArray(){
+        Sprite[] spriteArray = new Sprite[6];
+        spriteArray[0] = getSpriteByIndex(8, 4);//top-left
+        spriteArray[1] = getSpriteByIndex(8, 5);//top
+        spriteArray[2] = getSpriteByIndex(8, 6);//top-right
+        spriteArray[3] = getSpriteByIndex(9, 4);//bottom-left
+        spriteArray[4] = getSpriteByIndex(9, 5);//bottom
+        spriteArray[5] = getSpriteByIndex(9, 6);//bottom-right
+        return spriteArray;
+    }
+
+    public Sprite[] getDesertHouseSpriteArray(){
+        Sprite[] spriteArray = new Sprite[6];
+        spriteArray[0] = getSpriteByIndex(12, 7);//top-left
+        spriteArray[1] = getSpriteByIndex(12, 8);//top
+        spriteArray[2] = getSpriteByIndex(12, 9);//top-right
+        spriteArray[3] = getSpriteByIndex(13, 7);//bottom-left
+        spriteArray[4] = getSpriteByIndex(13, 8);//bottom
+        spriteArray[5] = getSpriteByIndex(13, 9);//bottom-right
+        return spriteArray;
+    }
+
+    public Sprite[] getLakeSpriteArray(){
+        Sprite[] spriteArray = new Sprite[20];
+        int cont = 0;
+        for(int i = 2; i < 7; i++){
+            for(int j = 9; j < 13; j++){
+                spriteArray[cont] = getSpriteByIndex(i, j);
+                cont++;
+            }
+        }
         return spriteArray;
     }
 
@@ -74,14 +106,6 @@ public class SpriteSheet {
 
     public Sprite getTreeSprite() {
         return getSpriteByIndex(0,1);
-    }
-
-    public Sprite getHorizontalFenceSprite() {
-        return getSpriteByIndex(2,1);
-    }
-
-    public Sprite getVerticalFenceSprite() {
-        return getSpriteByIndex(3,0);
     }
 
     public Sprite getFenceSprite(String position){

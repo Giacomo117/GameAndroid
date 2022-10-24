@@ -1,5 +1,7 @@
 package com.example.gameandroid;
 
+import static GameObject.Player.SPEED_PIXEL_PER_SEC;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -18,12 +20,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import GameObject.Border;
 import GameObject.Circle;
 import GameObject.Enemy;
 import GameObject.Player;
 import GameObject.Spell;
 import Graphics.SpriteSheet;
 import Graphics.Animator;
+import Map.MapLayout;
 import Map.Tilemap;
 
 /**
@@ -49,6 +53,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private TitleScreen.STATE State;
 
 
+
     public Game(Context context) {
         super(context);
         this.context=context;
@@ -68,7 +73,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         //inizializzo il player
         SpriteSheet spriteSheet = new SpriteSheet(context);
         Animator animator = new Animator(spriteSheet.getPlayerSpriteArray());
-        player=new Player(getContext(),joystick, 2*500,500,64, animator);
+        player=new Player(getContext(),joystick, 1920,1920,64, animator);
 
 
         //centro il player in mezzo
@@ -77,7 +82,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameDisplay= new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
 
         //inizializzo la mappa
-        tilemap = new Tilemap(spriteSheet);
+        tilemap = new Tilemap(context, spriteSheet);
 
         setFocusable(true); //sarebbe per permettere di dare il focus ad un componente, non so se serve, (forse si)
 //daje
@@ -160,8 +165,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         tilemap.draw(canvas, gameDisplay);
-        drawUpdatePerSec(canvas);
-        drawFramePerSec(canvas);
+        //drawUpdatePerSec(canvas);
+        //drawFramePerSec(canvas);
         joystick.draw(canvas);
 
         player.draw(canvas,gameDisplay); //per disegnare il player
@@ -231,7 +236,6 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         for (Spell spell : spellList){
             spell.update();
         }
-
 
         //iteratore che guarda tutti i nemici e vede se si sono scontrati col player
         Iterator<Enemy> iteratorEnemy=enemyList.iterator();
